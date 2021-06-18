@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <title>Document</title>
+    <script>
+      function validUrl(longurl) {
+        let url;
+        try {
+          url = new URL(longurl);
+        } catch (msg) {
+          return false;
+        }
+        return url.protocol === "http:" || url.protocol === "https:";
+      }
+      hashCode = function (s) {
+        return s.split("").reduce(function (a, b) {
+          a = (a << 4) - a + b.charCodeAt(0);
+          return a & a;
+        }, 0);
+      };
+      function short() {
+        var longurlid = document.getElementById("longurl");
+        var longurl = longurlid.value.toString().trim();
+        var shortedurlid = document.getElementById("shortedurl");
+        console.log(longurl);
+        var x = document.getElementById("shortbutton");
+        console.log(x.innerText);
+        if (longurl === "") {
+          alert("Enter Url.");
+        } else if (!validUrl(longurl)) {
+          alert(
+            "Enter valid url. eg:https://getbootstrap.com/docs/4.3/getting-started/introduction/"
+          );
+        } else if (x.innerText == "shorten") {
+          x.innerHTML = "another";
+          var shorturl = hashCode(longurl);
+          shortedurlid.innerHTML =
+            "http://yogesh/" + shorturl.toString().substr(2, 3);
+        } else {
+          x.innerHTML = "shorten";
+          longurlid.value = null;
+          shortedurlid.innerHTML = "";
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Welcome to URL Shortner.</h1>
+      <div class="jumbotron">
+        <form>
+          <input
+            type="url"
+            name="longurl"
+            id="longurl"
+            placeholder="Enter the url."
+          />
+          <button
+            class="btn btn-primary"
+            onclick="short()"
+            id="shortbutton"
+            type="button"
+          >
+            shorten
+          </button>
+          <div id="shortedurl"></div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
